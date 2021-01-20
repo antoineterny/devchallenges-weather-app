@@ -14,6 +14,8 @@ class App extends React.Component {
     searchResult: [],
     woeid: null,
     weather: {},
+    searchVisible: false,
+    imperial: false,
   }
   componentDidMount() {
     this.setState({ weather: parisWeather })
@@ -97,7 +99,10 @@ class App extends React.Component {
         {resultsList} */}
         {Object.keys(this.state.weather).length > 0 ? (
           <React.Fragment>
-            <Today weather={this.state.weather.consolidated_weather[0]} city={this.state.weather.title}/>
+            <Today
+              weather={this.state.weather.consolidated_weather[0]}
+              city={this.state.weather.title}
+            />
             <div className="details">
               <Forecast weather={this.state.weather.consolidated_weather} />
               <Highlights weather={this.state.weather.consolidated_weather[0]} />

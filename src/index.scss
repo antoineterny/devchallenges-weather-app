@@ -2,10 +2,15 @@
   --verydarkblue: #100e1d;
   --darkblue: #1e213a;
   --blue: #3c47e9;
+  --desaturatedblue: #585676;
   --gray1: #6e707a;
-  --gray2: #a09fb1;
+  --gray2: #88869D;
+  --gray3: #a09fb1;
   --lightgray: #e7e7eb;
   --yellow: #ffec65;
+}
+* {
+  box-sizing: border-box;
 }
 body {
   font-family: "Raleway", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
