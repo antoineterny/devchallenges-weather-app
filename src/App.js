@@ -14,10 +14,10 @@ class App extends React.Component {
   state = {
     localLat: null,
     localLong: null,
-    city: "",
+    city: "Paris",
     searchTerm: "",
     searchResult: [],
-    woeid: null,
+    woeid: 615702,
     weather: {},
     searchVisible: false,
     fahrenheit: false,
@@ -73,14 +73,13 @@ class App extends React.Component {
   }
 
   handleFahrenheitClick = val => {
-    if (val === 0) this.setState({fahrenheit: false})
-    else this.setState({fahrenheit: true})
+    if (val === 0) this.setState({ fahrenheit: false })
+    else this.setState({ fahrenheit: true })
   }
 
-  handleSearchVisibleClick = () => this.setState({searchVisible: !this.state.searchVisible})
+  handleSearchVisibleClick = () => this.setState({ searchVisible: !this.state.searchVisible })
 
   render() {
-
     return (
       <div className="App">
         {Object.keys(this.state.weather).length > 0 ? (
@@ -99,10 +98,16 @@ class App extends React.Component {
                 handleFahrenheitClick={this.handleFahrenheitClick}
               />
               <Highlights weather={this.state.weather.consolidated_weather[0]} />
-              <footer>Antoine Terny @ DevChallenges.io</footer>
+              <footer>
+                Data by <a href="https://www.metaweather.com/">MetaWeather.com</a>
+                <br />
+                Antoine Terny @ DevChallenges.io
+              </footer>
             </div>
           </React.Fragment>
-        ) : null}
+        ) : (
+          <p>Charging weather data... (please check that geolocation is allowed in your browser)</p>
+        )}
         <SearchPanel
           searchVisible={this.state.searchVisible}
           searchResult={this.state.searchResult}

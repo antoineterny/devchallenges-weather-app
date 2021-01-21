@@ -47,7 +47,7 @@ const ForecastCard = props => {
 }
 
 const Forecast = props => {
-  const forecastData = props.weather.slice(1)
+  const forecastData = props.weather ? props.weather.slice(1) : null
 
   return (
     <div className="Forecast">
@@ -69,9 +69,11 @@ const Forecast = props => {
         </button>
       </div>
       <div className="Forecast-cards">
-        {forecastData.map(dat => (
-          <ForecastCard dat={dat} key={dat.id} fahrenheit={props.fahrenheit}/>
-        ))}
+        {forecastData
+          ? forecastData.map(dat => (
+              <ForecastCard dat={dat} key={dat.id} fahrenheit={props.fahrenheit} />
+            ))
+          : null}
       </div>
       {/* </div> */}
     </div>

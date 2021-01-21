@@ -271,6 +271,7 @@
   transform: translateX(-100%);
   transition: transform 1s;
   padding: 82px 46px;
+  overflow: hidden;
   &.visible {
     transform: translateX(0);
   }
@@ -361,6 +362,13 @@ footer {
   font-size: 14px;
   color: var(--gray1);
   padding-bottom: 1em;
+  line-height: 2;
+  a {
+    color: var(--gray1);
+    &:hover {
+      color: var(--blue);
+    }
+  }
 }
 
 @media (max-width: 1275px) {
