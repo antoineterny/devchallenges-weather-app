@@ -49,7 +49,7 @@ const Highlights = props => {
         <div className="Highlights-card Highlights-pressure">
           <h4>Air Pressure</h4>
           <p>
-            <span>{props.weather.air_pressure}</span> mb
+            <span>{Math.round(props.weather.air_pressure)}</span> mb
           </p>
         </div>
       </div>

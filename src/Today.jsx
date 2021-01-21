@@ -23,7 +23,7 @@ const Today = props => {
         <button className="places" onClick={props.handleSearchVisibleClick}>
           Search for places
         </button>
-        <button className="here">
+        <button className="here" onClick={props.getCurrentPosition}>
           <i className="material-icons">my_location</i>
         </button>
       </div>

@@ -6,8 +6,8 @@ import SearchPanel from "./SearchPanel"
 import React from "react"
 
 // FAKE DATA //////////////////////////
-import parisWeather from "./paris.json"
-import querySan from "./query_san.json"
+// import parisWeather from "./paris.json"
+// import querySan from "./query_san.json"
 
 
 class App extends React.Component {
@@ -23,15 +23,15 @@ class App extends React.Component {
     fahrenheit: false,
   }
   componentDidMount() {
-    this.setState({ weather: parisWeather, searchResult: querySan })
-    // this.getCurrentPosition()
+    // this.setState({ weather: parisWeather, searchResult: querySan })
+    this.getCurrentPosition()
   }
 
   getCurrentPosition = async () => {
     navigator.geolocation.getCurrentPosition(
       pos => {
         this.setState({ localLat: pos.coords.latitude, localLong: pos.coords.longitude })
-        // this.getWoeidByLatLong(pos.coords.latitude, pos.coords.longitude)
+        this.getWoeidByLatLong(pos.coords.latitude, pos.coords.longitude)
       },
       err => console.log(err)
     )
@@ -51,7 +51,7 @@ class App extends React.Component {
     const baseURL = "www.metaweather.com/api/location/search/?query="
     const response = await fetch(corsAnywhere + baseURL + term)
     const data = await response.json()
-    console.log(data)
+    // console.log(data)
     this.setState({ searchResult: data })
   }
 
@@ -60,8 +60,8 @@ class App extends React.Component {
     const baseURL = "www.metaweather.com/api/location/"
     const response = await fetch(corsAnywhere + baseURL + woeid + "/")
     const data = await response.json()
-    console.log(data)
-    this.setState({ weather: data })
+    // console.log(data)
+    this.setState({ weather: data, searchVisible: false })
     return data
   }
 
@@ -90,13 +90,14 @@ class App extends React.Component {
               city={this.state.weather.title}
               fahrenheit={this.state.fahrenheit}
               handleSearchVisibleClick={this.handleSearchVisibleClick}
-              />
+              getCurrentPosition={this.getCurrentPosition}
+            />
             <div className="details">
               <Forecast
                 weather={this.state.weather.consolidated_weather}
                 fahrenheit={this.state.fahrenheit}
                 handleFahrenheitClick={this.handleFahrenheitClick}
-                />
+              />
               <Highlights weather={this.state.weather.consolidated_weather[0]} />
               <footer>Antoine Terny @ DevChallenges.io</footer>
             </div>
@@ -109,6 +110,7 @@ class App extends React.Component {
           handleFormSubmit={this.handleFormSubmit}
           handleFormChange={this.handleFormChange}
           handleSearchVisibleClick={this.handleSearchVisibleClick}
+          getWeather={this.getWeather}
         />
       </div>
     )

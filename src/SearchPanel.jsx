@@ -6,10 +6,7 @@ const SearchPanel = props => {
     resultsList = (
       <ul>
         {props.searchResult.map(res => (
-          <li
-            key={res.latt_long}
-            // onClick={() => this.setState({ city: res.title, woeid: res.woeid })}
-          >
+          <li key={res.latt_long} onClick={() => {props.getWeather(res.woeid)}}>
             {res.title}
             <i className="material-icons">navigate_next</i>
           </li>
