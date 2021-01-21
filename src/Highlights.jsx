@@ -1,7 +1,6 @@
 import React from "react"
 
 const Highlights = props => {
-  console.log(props)
   return (
     <div className="Highlights">
       <h3>Today's Highlights</h3>

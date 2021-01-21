@@ -17,7 +17,6 @@ const ForecastCard = props => {
     "Nov",
     "Dec",
   ]
-  console.log(props)
   const applicableDate = new Date(props.dat.applicable_date)
   const applicableDay =
     applicableDate.getDay() === today.getDay() + 1
@@ -32,8 +31,16 @@ const ForecastCard = props => {
         <img src={`./img/${props.dat.weather_state_abbr}.png`} alt="" />
       </div>
       <div className="Forecast-card-temperatures">
-        <span className="max">{Math.round(props.dat.max_temp)}°C</span>
-        <span className="min">{Math.round(props.dat.min_temp)}°C</span>
+        <span className="max">
+          {props.fahrenheit
+            ? `${Math.round((props.dat.max_temp * 9) / 5) + 32}°F`
+            : `${Math.round(props.dat.max_temp)}°C`}
+        </span>
+        <span className="min">
+          {props.fahrenheit
+            ? `${Math.round((props.dat.min_temp * 9) / 5) + 32}°F`
+            : `${Math.round(props.dat.min_temp)}°C`}
+        </span>
       </div>
     </div>
   )
@@ -45,15 +52,27 @@ const Forecast = props => {
   return (
     <div className="Forecast">
       {/* <div className="Forecast-content"> */}
-        <div className="Forecast-header">
-          <button id="celsius">°C</button>
-          <button id="fahrenheit">°F</button>
-        </div>
-        <div className="Forecast-cards">
-          {forecastData.map(dat => (
-            <ForecastCard dat={dat} key={dat.id} />
-          ))}
-        </div>
+      <div className="Forecast-header">
+        <button
+          id="celsius"
+          onClick={() => props.handleFahrenheitClick(0)}
+          className={props.fahrenheit ? null : "active-button"}
+        >
+          °C
+        </button>
+        <button
+          id="fahrenheit"
+          onClick={() => props.handleFahrenheitClick(1)}
+          className={props.fahrenheit ? "active-button" : null}
+        >
+          °F
+        </button>
+      </div>
+      <div className="Forecast-cards">
+        {forecastData.map(dat => (
+          <ForecastCard dat={dat} key={dat.id} fahrenheit={props.fahrenheit}/>
+        ))}
+      </div>
       {/* </div> */}
     </div>
   )

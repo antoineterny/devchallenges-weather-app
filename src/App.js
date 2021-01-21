@@ -1,9 +1,14 @@
 import "./App.scss"
-import parisWeather from "./paris.json"
 import Today from "./Today"
 import Forecast from "./Forecast"
 import Highlights from "./Highlights"
+import SearchPanel from "./SearchPanel"
 import React from "react"
+
+// FAKE DATA //////////////////////////
+import parisWeather from "./paris.json"
+import querySan from "./query_san.json"
+
 
 class App extends React.Component {
   state = {
@@ -15,10 +20,10 @@ class App extends React.Component {
     woeid: null,
     weather: {},
     searchVisible: false,
-    imperial: false,
+    fahrenheit: false,
   }
   componentDidMount() {
-    this.setState({ weather: parisWeather })
+    this.setState({ weather: parisWeather, searchResult: querySan })
     // this.getCurrentPosition()
   }
 
@@ -67,48 +72,44 @@ class App extends React.Component {
     this.getWoeidBySearch(this.state.searchTerm)
   }
 
+  handleFahrenheitClick = val => {
+    if (val === 0) this.setState({fahrenheit: false})
+    else this.setState({fahrenheit: true})
+  }
+
+  handleSearchVisibleClick = () => this.setState({searchVisible: !this.state.searchVisible})
+
   render() {
-    // let resultsList = []
-    // if (this.state.searchResult) {
-    //   resultsList = (
-    //     <ul>
-    //       {this.state.searchResult.map(res => (
-    //         <li
-    //           key={res.latt_long}
-    //           onClick={() => this.setState({ city: res.title, woeid: res.woeid })}
-    //         >
-    //           {res.title}
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   )
-    // }
+
     return (
       <div className="App">
-        {/* <button onClick={() => this.getWeather(this.state.woeid)}>
-          <i className="material-icons">my_location</i>
-        </button>
-        <form onSubmit={this.handleFormSubmit}>
-          <input
-            type="text"
-            placeholder="search location"
-            onChange={this.handleFormChange}
-            value={this.state.searchTerm}
-          />
-        </form>
-        {resultsList} */}
         {Object.keys(this.state.weather).length > 0 ? (
           <React.Fragment>
             <Today
               weather={this.state.weather.consolidated_weather[0]}
               city={this.state.weather.title}
-            />
+              fahrenheit={this.state.fahrenheit}
+              handleSearchVisibleClick={this.handleSearchVisibleClick}
+              />
             <div className="details">
-              <Forecast weather={this.state.weather.consolidated_weather} />
+              <Forecast
+                weather={this.state.weather.consolidated_weather}
+                fahrenheit={this.state.fahrenheit}
+                handleFahrenheitClick={this.handleFahrenheitClick}
+                />
               <Highlights weather={this.state.weather.consolidated_weather[0]} />
+              <footer>Antoine Terny @ DevChallenges.io</footer>
             </div>
           </React.Fragment>
         ) : null}
+        <SearchPanel
+          searchVisible={this.state.searchVisible}
+          searchResult={this.state.searchResult}
+          searchTerm={this.state.searchTerm}
+          handleFormSubmit={this.handleFormSubmit}
+          handleFormChange={this.handleFormChange}
+          handleSearchVisibleClick={this.handleSearchVisibleClick}
+        />
       </div>
     )
   }

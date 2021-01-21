@@ -20,7 +20,9 @@ const Today = props => {
   return (
     <div className="Today">
       <div className="Today-header">
-        <button className="places">Search for places</button>
+        <button className="places" onClick={props.handleSearchVisibleClick}>
+          Search for places
+        </button>
         <button className="here">
           <i className="material-icons">my_location</i>
         </button>
@@ -29,10 +31,15 @@ const Today = props => {
         <img src={`./img/${props.weather.weather_state_abbr}.png`} alt="" />
       </div>
       <div className="Today-details">
-        <p className="temperature">
-          <span>{Math.round(props.weather.the_temp)}</span>
-          °C
-        </p>
+        {props.fahrenheit ? (
+          <p className="temperature">
+            <span>{Math.round((props.weather.the_temp * 9) / 5 + 32)}</span>°F
+          </p>
+        ) : (
+          <p className="temperature">
+            <span>{Math.round(props.weather.the_temp)}</span>°C
+          </p>
+        )}
         <p className="weather-state">{props.weather.weather_state_name}</p>
         <p className="weather-time">
           Today <span>•</span> {days[applicableDate.getDay()]}, {applicableDate.getDate()}{" "}
